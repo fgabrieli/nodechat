@@ -1,0 +1,115 @@
+@import url('http://fonts.googleapis.com/css?family=Lato');
+
+body {
+	margin: 0;
+	padding: 0
+}
+
+body, button, input {
+	font-family: Lato;
+	font-size: 15px;
+}
+
+.loading {
+	position: absolute;
+	top: calc(50% - 10px);
+	width: 130px;
+	left: calc(50% - 65px - 10px);
+	background-color: #003366;
+	color: white;
+	padding: 20px;
+	border-radius: 10px;
+	z-index: 10000;
+}
+
+.connect {
+	position: absolute;
+	top: calc(50% - 10px);
+	width: 270px;
+	left: calc(50% - 135px - 10px);
+	background-color: #003366;
+	color: white;
+	padding: 20px;
+	border-radius: 10px;
+	z-index: 10000;
+}
+
+.connect-failed {
+	position: absolute;
+	width: 360px;
+	top: calc(60%);
+	left: calc(50% - 180px);
+	color: red;
+	padding: 20px;
+	font-weight: bold;
+	border: 1px solid red;
+	border-radius: 5px;
+}
+
+.overlay {
+	opacity: 0.5;
+	background-color: #ccc;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	z-index: 9999;
+}
+
+.register-view {
+	position: absolute;
+	top: calc(50% - 30px);
+	left: calc(50% - 190px);
+	width: 380px;
+	height: 30px;
+}
+
+.chat-view {
+	position: absolute;
+	top: calc(50% - 230px);
+	left: calc(50% - 260px);
+	width: 520px;
+	height: 460px;
+}
+
+.chat {
+	/* margin: 0 auto; */
+	/* position: relative; */
+	width: 500px;
+	height: 400px;
+	/* margin-top: 50px; */
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 5px;
+	border: 1px solid #003366;
+}
+
+.write {
+	position: relative;
+	margin: 0 auto;
+	width: 490px;
+	top: 20px;
+	/* margin-top: 20px; */
+	margin: 0 auto;
+}
+
+.message {
+	display: block;
+	font-family: Verdana;
+	line-height: 1.5;
+}
+
+.myMessage {
+	color: blue;
+}
+
+.user-joined {
+	color: green;
+	font-weight: strong;
+}
+
+.user-left {
+	color: grey;
+	font-weight: strong;
+}
