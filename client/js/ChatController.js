@@ -55,6 +55,12 @@ var ChatController = {
     function pushMsg(msg) {
       $scope.msgs.push(msg);
       $scope.$apply();
+
+      var msgHeight = $('.message:first').height();
+      var msgNum = $('.message').size();
+      var scrollTo = (msgNum * msgHeight)
+      
+      $('.chat').scrollTop(scrollTo);
     }
 
     $(window).on('beforeunload', function() {

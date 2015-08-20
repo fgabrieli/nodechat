@@ -1,5 +1,9 @@
 @import url('http://fonts.googleapis.com/css?family=Lato');
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	padding: 0
@@ -71,25 +75,28 @@ body, button, input {
 	left: calc(50% - 260px);
 	width: 520px;
 	height: 460px;
+	/*added by ale*/
+	background-color: #929AB2;
+	padding: 15px;
 }
 
 .chat {
 	/* margin: 0 auto; */
 	/* position: relative; */
-	width: 500px;
 	height: 400px;
 	/* margin-top: 50px; */
 	overflow-x: hidden;
 	overflow-y: scroll;
 	padding: 5px;
-	border: 1px solid #003366;
+	/*added by Ale*/
+	background-color: #EAF0FF;
 }
 
 .write {
 	position: relative;
 	margin: 0 auto;
 	width: 490px;
-	top: 20px;
+	top: 10px;
 	/* margin-top: 20px; */
 	margin: 0 auto;
 }
@@ -112,4 +119,10 @@ body, button, input {
 .user-left {
 	color: grey;
 	font-weight: strong;
+}
+
+.aguanta {
+	height: 360px;
+	background-image: url('../img/gandalf-aguanta.jpg');
+	width: 480px;
 }
