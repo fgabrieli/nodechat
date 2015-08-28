@@ -1,0 +1,181 @@
+/**
+ * hacker.css
+ * 
+ * @author Esteban Jelicich
+ */
+
+/*Custom css*/
+*{
+	box-sizing: border-box;
+}
+*,body,p,span,label,input,li,button{
+	font-family: 'Consolas', sans-serif;
+	font-size: 14px;
+}
+body{
+	background: #151515;
+	padding: 0px;
+	overflow: hidden;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix {
+    display: inline-block;
+}
+.clearfix {
+    display: block;
+}
+/*register*/
+.register-view{
+	background: none;
+	width: 390px;
+    height: auto;
+}
+.register-view label{
+	color: #AEAEAE;
+	font-size: 14px;
+}
+.register-view input[type="text"]{
+	background: #000;
+	border: 0px;
+	color: #C5AF75;
+	padding: 5px;
+}
+.register-view input[type="text"]:focus {
+	outline: none;
+	box-shadow: #C5AF75 0px 0px 5px 0px;
+}
+.register-view button{
+	background: #262626;
+	border: 3px solid;
+	border-radius: 2px;
+	color: #E26127;
+	padding: 2px 5px;
+	border-top-color: #373737;
+	border-left-color: #373737;
+	border-right-color: #000;
+	border-bottom-color: #000;
+}
+.register-view .skin-container{
+    margin-top: 10px;
+}
+.register-view .skin-container select{
+    background: #000 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAANklEQVQYV2NkIBIwPkpS/0+MWkaQIkKK5ebdZAQrxKcYpAgkD1eITTFMEYZCZMXIirAqxOUxAAMWEnJJuj76AAAAAElFTkSuQmCC) no-repeat 60px;
+    border: 0;
+    color: #C5AF75;
+    padding: 3px 5px;
+}
+.register-view .skin-container select:focus{
+    outline: none;
+    box-shadow: #C5AF75 0px 0px 5px 0px;
+}
+/*chat*/
+
+.chat-view {
+    position: relative;
+    padding: 0;
+    height: 100%;
+    top: auto;
+    left: auto;
+    background: none;
+    width: 85%;
+    float: left;
+}
+.chat-view .chat{
+	height: calc(100% - 40px);
+    position: static;
+    margin: 0;
+    background: none;
+    overflow: auto;
+}
+.chat-view .write{
+	position: relative;
+    border-top: 2px solid #191919;
+    width: 100%;
+    margin: 0;
+    top: auto;
+    height: 40px;
+}
+.chat-view .write input[type="text"]{
+	width: 100%;
+    height: 40px;
+    background: none;
+    border: none;
+    padding: 0px 100px 0px 5px;
+    color: #C5AF75;
+}
+.chat-view .write input[type="text"]:focus {
+	outline: none;
+   -moz-box-shadow: inset 0 0 10px #C5AF75;
+   -webkit-box-shadow: inset 0 0 10px #C5AF75;
+   box-shadow: inset 10px 0px 6px -10px #C5AF75
+}
+.chat-view .write button{
+	background: #262626;
+	border: 3px solid;
+	border-radius: 2px;
+	color: #E26127;
+	padding: 2px 5px;
+	border-top-color: #373737;
+	border-left-color: #373737;
+	border-right-color: #000;
+	border-bottom-color: #000;
+	position: absolute;
+    top: 0;
+    right: 0;
+    height: 38px;
+}
+.chat-view span{
+	color: #C5AF75;
+}
+.chat-view .user-joined{
+	color: #AEAEAE;
+}
+.chat-view .user-left{
+	color: #A5A5A5;
+}
+.chat-view .myMessage{
+	color: #9B703F;
+}
+.connected-box{
+    position: static;
+    float: left;
+    width: 15%;
+    border: none;
+    color: #F9EE98;
+    background: #191919;
+    height: 100%;
+    padding: 5px;
+}
+/*scroll*/
+.chat-view .chat{
+	overflow:auto;
+}
+.chat-view .chat{
+    scrollbar-face-color: #367CD2;
+    scrollbar-shadow-color: #FFFFFF;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-3dlight-color: #FFFFFF;
+    scrollbar-darkshadow-color: #FFFFFF;
+    scrollbar-track-color: #FFFFFF;
+    scrollbar-arrow-color: #FFFFFF;
+}
+
+/* Let's get this party started */
+.chat-view .chat::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+.chat-view .chat::-webkit-scrollbar-track {
+}
+ 
+/* Handle */
+.chat-view .chat::-webkit-scrollbar-thumb {
+    background: #262626; 
+}

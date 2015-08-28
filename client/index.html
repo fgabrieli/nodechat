@@ -41,9 +41,9 @@
 <link href="css/client.css" rel="stylesheet" type="text/css" />
 
 </head>
-<body data-ng-app="webApp">
+<body data-ng-app="webApp" class="clearfix">
 
-  <div data-ng-controller="ChatController">
+  <div data-ng-controller="ChatController" class="clearfix">
 
     <div class="loading" data-ng-show="isLoading">Loading...</div>
 
@@ -52,9 +52,16 @@
     <div class="overlay" data-ng-show="isLoading || isConnecting"></div>
   
     <div class="register-view" data-ng-show="!isRegistered">
-      Enter your name: 
-      <input type="text" data-ng-model="name" />
+      <label for="name">Enter your name</label>
+      <input type="text" data-ng-model="name" id="name" maxlength="20"/>
       <button data-ng-click="register()">Connect</button>
+      
+      <div class="skin-container">
+        <label for ="select-skin">Select skin</label>
+        <select id="select-skin" ng-model="selectedSkin" ng-change="changeSkin(selectedSkin)" data-ng-options="skin as skin.name for skin in skins">
+            <option value="" disabled>Skin</option>
+        </select>
+      </div>
     </div>
 
 
@@ -81,7 +88,7 @@
 
     <!-- currently connected -->
     <div class="connected-box" data-ng-show="isRegistered">
-     <p data-ng-repeat="name in names | orderBy:-name">{{name}}</p>
+     <p data-ng-repeat="name in names | orderBy:-name track by $index">{{name}}</p>
     </div>
 
     <div class="connect-failed" data-ng-show="isSrvUnreachable">Connection to server failed, try again in a few minutes.</div>

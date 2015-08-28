@@ -18,6 +18,15 @@ var ChatController = {
     $scope.isRegistered = false;
     
     $scope.names = [];
+
+    $scope.skins = [{ 
+        id : 0,
+        name : 'default'
+      },
+      {
+        id: 1 ,
+        name:'hacker'
+      }];
     
     nc.Event.bind(ncCfg.Event.msgReceived, 'ChatController', function(msg) {
       pushMsg({
@@ -185,6 +194,27 @@ var ChatController = {
 
     $scope.isMyMsg = function(msg) {
       return (msg.data.sender == $scope.name);
+    }
+
+    $scope.changeSkin = function(newSkin) {
+      var $skin = $("#skin-stylesheet");
+      var hasSkin = ($skin.size() == 1);
+      if(hasSkin) {
+        $skin.remove();
+      }
+
+      var isDefault = (newSkin.id == 0);
+      if(!isDefault){
+        var cssPath = 'css/skins/';
+        var fileName = newSkin.name + '.css';
+        var $head = $('head');
+        var $link = $('<link>');
+        $link.attr('id', 'skin-stylesheet');
+        $link.attr('href', cssPath + fileName);
+        $link.attr('rel','stylesheet');
+        $link.attr('type','text/css');
+        $head.append($link);
+      }
     }
   }
 }
