@@ -162,4 +162,20 @@ body, button, input {
 
 }
 
+/* Let's get this party started */
+.chat-view .chat::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+.chat-view .chat::-webkit-scrollbar-track {
+}
+ 
+/* Handle */
+.chat-view .chat::-webkit-scrollbar-thumb {
+    background: #262626; 
+}
 
+div.msg-text {
+	display: inline;
+}

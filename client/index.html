@@ -3,6 +3,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.min.js"></script>
 
 <!-- propietary libs -->
 <script src="js/nc/nc.js"></script>
@@ -68,7 +69,9 @@
     <div class="chat-view" data-ng-show="isRegistered">
       <div class="chat">
         <div class="message" data-ng-repeat="msg in msgs">
-         <span data-ng-if="isMessage(msg)" data-ng-class="{myMessage : isMyMsg(msg)}">&lt;{{msg.data.sender}}&gt; {{msg.data.text}}</span>
+         <div data-ng-if="isMessage(msg)" data-ng-class="{myMessage : isMyMsg(msg)}">
+          &lt;{{msg.data.sender}}&gt; <div class="msg-text" data-ng-bind-html="msg.data.text"></div>
+         </div>
 
          <span data-ng-if="isUserJoin(msg)" class="user-joined">*** {{msg.data.name}} joined the chat</span>
 
