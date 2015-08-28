@@ -4,4 +4,4 @@
  * @author Fernando Gabrieli
  */
 
-var webApp = angular.module('webApp', []);
+var webApp = angular.module('webApp', ['ngSanitize']);
