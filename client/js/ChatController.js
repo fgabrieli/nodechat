@@ -17,6 +17,8 @@ var ChatController = {
 
     $scope.isRegistered = false;
     
+    $scope.names = [];
+    
     nc.Event.bind(ncCfg.Event.msgReceived, 'ChatController', function(msg) {
       pushMsg({
         type : 'message',
@@ -36,11 +38,40 @@ var ChatController = {
             name : msg.name
           }
         });
+
+        addName(msg.name);
       } else {
         $scope.isRegistered = true;
         $scope.isLoading = false;
         $scope.$apply();
+        
+        getChatNames();
       }
+    });
+    
+    function addName(name) {
+      $scope.names.push(name);
+      $scope.$apply();
+    }
+
+    function removeName(name) {
+      for (var i = 0; i < $scope.names.length; i++) {
+        var isName = ($scope.names[i] == name);
+        if (isName) {
+          $scope.names.splice(i, 1);
+          $scope.$apply();
+          break;
+        }
+      }
+    }
+    
+    function getChatNames() {
+      t.client.getNames();
+    }
+
+    nc.Event.bind(ncCfg.Event.gotNames, 'ChatController', function(names) {
+      $scope.names = names;
+      $scope.$apply();
     });
 
     nc.Event.bind(ncCfg.Event.userLeft, 'ChatController', function(msg) {
@@ -50,8 +81,10 @@ var ChatController = {
           name : msg.name
         }
       });
+      
+      removeName(msg.name);
     });
-
+    
     function pushMsg(msg) {
       $scope.msgs.push(msg);
       $scope.$apply();

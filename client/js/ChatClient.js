@@ -16,7 +16,7 @@ var ChatClientFactory = {
 
 var ChatClient = {
 
-  SERVER_HOST : 'localhost',
+  SERVER_HOST : '127.0.0.1',
 
   config : {},
 
@@ -33,6 +33,7 @@ var ChatClient = {
   msgType : {
     register : 'chatRegister',
     message : 'chatMessage',
+    getNames : 'chatGetNames'
   },
 
   PORT : 8734,
@@ -158,6 +159,13 @@ var ChatClient = {
       }
     });
   },
+  
+  getNames : function() {
+    var t = ChatClient;
+    t.send({
+      type : this.msgType.getNames
+    });
+  },
 
   /**
    * Say something in the chat
@@ -244,7 +252,7 @@ var ChatMsgHandler = {
 
   chatRegister : function(chatClient, msg) {
     console.log('a new user registered', msg);
-
+    
     nc.Event.fire(ncCfg.Event.userJoined, {
       name : msg.data.name
     });
@@ -264,6 +272,11 @@ var ChatMsgHandler = {
       sender : msg.data.sender,
       text : msg.data.text
     });
+  },
+  
+  chatGetNames : function(chatclient, msg) {
+    var names = msg.data;
+    nc.Event.fire(ncCfg.Event.gotNames, names);
   },
 
   // server ack for a client previous message

@@ -63,14 +63,16 @@ var ChatServer = {
     });
 
     cliWs.on('close', function() {
-      console.log('connection closed for', client.getName(), client);
+      console.log('connection closed for', client.getName());
 
-      t.broadcast({
-        type : 'chatUnregister',
-        data : {
-          name : client.getName()
-        }
-      });
+      if (client.isRegistered()) {
+        t.broadcast({
+          type : 'chatUnregister',
+          data : {
+            name : client.getName()
+          }
+        });
+      }
 
       t.removeClient(client);
     });
@@ -95,10 +97,18 @@ var ChatServer = {
     for (var i = 0; i < t.clients.length; i++) {
       if (client == t.clients[i]) {
         console.log('removing client', t.clients[i].getName());
+        var cli = t.clients[i];
+        cli.disconnect();
         t.clients.splice(i, 1);
         break;
       }
     }
+  },
+  
+  getClients : function() {
+    var t = ChatServer;
+
+    return t.clients;
   },
 
   broadcast : function(msg) {
@@ -110,21 +120,26 @@ var ChatServer = {
     var msgJson = JSON.stringify(msg);
     for (var i = 0; i < t.clients.length; i++) {
       var cli = t.clients[i];
-      var ws = cli.getSocket();
+      
+      if (cli.isRegistered()) {
+        var ws = cli.getSocket();
 
-      try {
-        ws.send(msgJson);
-      } catch (e) {
-        console.log(e, 'closing connection for', cli.getName());
-        t.removeClient(cli);
+        try {
+          ws.send(msgJson);
+        } catch (e) {
+          console.log(e, 'closing connection for', cli.getName());
+          t.removeClient(cli);
+        }
       }
     }
   },
   
   send : function(destClient, msg) {
-    var ws = destClient.getSocket();
-    var msgJson = JSON.stringify(msg);
-    ws.send(msgJson);
+    if (destClient.isConnected()) {
+      var ws = destClient.getSocket();
+      var msgJson = JSON.stringify(msg);
+      ws.send(msgJson);
+    }
   },
   
   saveMsg : function(chatMsg) {
@@ -141,6 +156,8 @@ function ChatClient(wSocket) {
   var registered = false;
 
   var name = '';
+  
+  var isConnected = true;
 
   var t = this;
 
@@ -163,6 +180,17 @@ function ChatClient(wSocket) {
   t.isRegistered = function() {
     return registered;
   }
+  
+  t.isConnected = function() {
+    return isConnected;
+  }
+  
+  t.disconnect = function() {
+    if (isConnected) {
+      wSocket.close();
+      isConnected = false;
+    }
+  }
 }
 
 var ChatMsgHandler = {
@@ -172,12 +200,11 @@ var ChatMsgHandler = {
   /**
    * initialize msg handler
    * 
-   * @param Object
-   *         web socket server
+   * @param Object ChatServer
    */
-  init : function(serverWs) {
+  init : function(server) {
     var t = ChatMsgHandler;
-    t.server = serverWs;
+    t.server = server;
     t.chatEvt = require('./ChatEvent');
   },
 
@@ -185,7 +212,7 @@ var ChatMsgHandler = {
   process : function(client, msgJson) {
     var t = ChatMsgHandler;
 
-    console.log(msgJson);
+    //console.log(msgJson);
 
     var msg = JSON.parse(msgJson);
 
@@ -211,25 +238,34 @@ var ChatMsgHandler = {
   chatRegister : function(client, msg) {
     var t = ChatMsgHandler;
 
-    console.log('chatRegister', msg);
+    var clientName = msg.data.name;
+    var validator = ChatValidator;
+    var isValid = (validator.validateName(msg.data.name));
+    if (isValid) {
+      console.log('received request to register from', msg.data.name, msg);
 
-    client.setName(msg.data.name);
+      client.setName(msg.data.name);
 
-    console.log('client', msg.data.name, 'has been registered');
+      console.log('client', msg.data.name, 'has been registered');
 
-    client.register();
+      client.register();
 
-    t.chatEvt.add({
-      type : 'register',
-      data : msg.data
-    });
+      t.chatEvt.add({
+        type : 'register',
+        data : msg.data
+      });
 
-    t.server.broadcast({
-      type : 'chatRegister',
-      data : {
-        name : msg.data.name
-      }
-    });
+      t.server.broadcast({
+        type : 'chatRegister',
+        data : {
+          name : msg.data.name
+        }
+      });
+    } else {
+      t.server.removeClient(client);
+      
+      // XXX: send error
+    }
   },
 
   chatMessage : function(client, msg) {
@@ -248,10 +284,37 @@ var ChatMsgHandler = {
 
       t.server.saveMsg(finalMsg);
     }
+  },
+  
+  chatGetNames : function(client, msg) {
+    var t = ChatMsgHandler;
+
+    var names = [];
+    var clients = t.server.getClients();
+    clients.forEach(function(cli) {
+      names.push(cli.getName());
+    });
+
+    t.server.send(client, {
+      type : msg.type,
+      seq : 0,
+      data : names
+    });
   }
 
 // add more handlers here by declaring functions with the msg type as their name
 
 }
 
+var ChatValidator = {
+  validateName : function(name) {
+    var isString = (typeof name == 'string');
+    var isEmpty = (isString && name.length == 0);
+    
+    return (isString && !isEmpty);
+  }
+}
+
+
 module.exports = ChatServer;
+

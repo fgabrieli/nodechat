@@ -78,11 +78,15 @@
         <button data-ng-click="sendMsg()">Send message</button>
       </div>
     </div>
+           <!-- currently connected -->
+      <div class="connected-box">
+          <p>Alejandro naistat el bananero</p>
+            <p>Ale</p>
+              <p>Ale</p>
+            
+      </div>
 
-    <!-- currently connected -->
-    <div class="connected-box" data-ng-show="isRegistered">
-     <p data-ng-repeat="name in names | orderBy:-name">{{name}}</p>
-    </div>
+
 
     <div class="connect-failed" data-ng-show="isSrvUnreachable">Connection to server failed, try again in a few minutes.</div>
 

@@ -4,7 +4,8 @@ nodeChat.Config = {};
 
 nodeChat.Config.Event = {
   msgReceived : 'MsgReceived',
-  userJoined : 'UserJoined'
+  userJoined : 'UserJoined',
+  gotNames : 'GotNames'
 };
 
 // shortcut

@@ -12,6 +12,7 @@ body {
 body, button, input {
 	font-family: Lato;
 	font-size: 15px;
+	/* margin: 0 auto; */
 }
 
 .loading {
@@ -66,8 +67,17 @@ body, button, input {
 	top: calc(50% - 30px);
 	left: calc(50% - 190px);
 	width: 380px;
-	height: 30px;
+	height: 35px;
+	color: white;
+	/* font-weight: bold; */
+	padding: 5px;
+	padding-top:;
+	/* padding-top: 12px; */
+	background-color: rgba(0,0,200,0.5);
+
+	border-radius: 5px;
 }
+
 
 .chat-view {
 	position: absolute;
@@ -86,6 +96,7 @@ body, button, input {
 	height: 400px;
 	/* margin-top: 50px; */
 	overflow-x: hidden;
+
 	overflow-y: scroll;
 	padding: 5px;
 	/*added by Ale*/
@@ -121,8 +132,32 @@ body, button, input {
 	font-weight: strong;
 }
 
-.aguanta {
-	height: 360px;
-	background-image: url('../img/gandalf-aguanta.jpg');
-	width: 480px;
+.connected-box{
+
+		position:absolute;
+		height: 460px;
+		width:200px;
+		border:15px solid #929AB2;
+		top: calc(50% - 230px);
+		left: calc(50% + 270px);
+		background-color: #EAF0FF;
+		
+
+		overflow:hidden;
+
+		/* white-space: nowrap; */
+
+		/* text-overflow: ellipsis; */
+
+}
+
+.connected-box p{
+	margin:0px;
+	padding-left:5px;
+	padding-bottom:5px;
+			padding-top:5px;
+	border-bottom:1px solid rgba(0,0,0,0.3);
+	/* text-overflow: ellipsis; */
+	/* white-space: nowrap; */
+
 }
