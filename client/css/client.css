@@ -6,13 +6,10 @@
 
 body {
 	margin: 0;
-	padding: 0
-}
-
-body, button, input {
+	padding: 0;
+	background: #222;
 	font-family: Lato;
 	font-size: 15px;
-	/* margin: 0 auto; */
 }
 
 .loading {
@@ -62,6 +59,10 @@ body, button, input {
 	z-index: 9999;
 }
 
+.msg-text {
+	display: inline-block;
+}
+
 .register-view {
 	position: absolute;
 	top: calc(50% - 30px);
@@ -87,7 +88,7 @@ body, button, input {
 	height: 460px;
 	/*added by ale*/
 	background-color: #929AB2;
-	padding: 15px;
+	padding: 5px;
 }
 
 .chat {
@@ -107,7 +108,7 @@ body, button, input {
 	position: relative;
 	margin: 0 auto;
 	width: 490px;
-	top: 10px;
+	top: 18px;
 	/* margin-top: 20px; */
 	margin: 0 auto;
 }
@@ -137,7 +138,7 @@ body, button, input {
 		position:absolute;
 		height: 460px;
 		width:200px;
-		border:15px solid #929AB2;
+		border:5px solid #929AB2;
 		top: calc(50% - 230px);
 		left: calc(50% + 270px);
 		background-color: #EAF0FF;
@@ -160,4 +161,165 @@ body, button, input {
 	/* text-overflow: ellipsis; */
 	/* white-space: nowrap; */
 
+}
+
+.emoticon {
+	width: 16px;
+	height: 16px;
+}
+
+.emoticon-item {
+	list-style: none;
+	margin: 3px 3px 3px 3px;
+	display: inline-block;
+	outline: 1px solid transparent;
+}
+
+.chat-emoticon {
+	display: inline-block;
+}
+
+.emoticon-item:hover {
+	outline: 1px solid #555;
+}
+
+.emoticon-container {
+	padding: 5px;
+	margin: 0;
+}
+
+.emoticon-btn {
+	border: none;
+	top: 2px;
+ 	position: relative;
+}
+
+.emoticon-description {
+	text-align: center;
+}
+
+.emoticon-panel {
+	background-color: #DDDDDD;
+	border-radius: 4px;
+	border: 1px solid gray;
+  	height: 150px;
+  	width: 150px;
+ 	 position: absolute;
+  	left: 355px;
+  	top: 27px;
+}
+
+.emoticon.smile {
+	background: url('../img/emoticons.png') no-repeat -1px -341px;
+}
+
+.emoticon.sad {
+	background: url('../img/emoticons.png') no-repeat -1px -120px;
+}
+
+.emoticon.like {
+	background: url('../img/emoticons.png') no-repeat 0 -1px;
+}
+
+.emoticon.angel {
+	background: url('../img/emoticons.png') no-repeat 0 -17px;
+}
+.emoticon.nyam {
+	background: url('../img/emoticons.png') no-repeat -1px -35px;
+}
+.emoticon.wtf {
+	background: url('../img/emoticons.png') no-repeat -1px -52px;
+}
+.emoticon.cry {
+	background: url('../img/emoticons.png') no-repeat -1px -86px;
+}
+.emoticon.devil {
+	background: url('../img/emoticons.png') no-repeat -1px -102px;
+}
+.emoticon.surprised {
+	background: url('../img/emoticons.png') no-repeat -1px -137px;
+}
+.emoticon.nerd {
+	background: url('../img/emoticons.png') no-repeat -1px -154px;
+}
+.emoticon.happy {
+	background: url('../img/emoticons.png') no-repeat -1px -171px;
+}
+.emoticon.pain {
+	background: url('../img/emoticons.png') no-repeat -1px -188px;
+}
+.emoticon.heart {
+	background: url('../img/emoticons.png') no-repeat -1px -206px;
+}
+
+.emoticon.kiss {
+	background: url('../img/emoticons.png') no-repeat -1px -239px;
+}
+
+.emoticon.aww {	
+	background: url('../img/emoticons.png') no-repeat -1px -222px;
+}
+
+.emoticon.juaz {
+	background: url('../img/emoticons.png') no-repeat -1px -256px;
+}
+
+.emoticon.nestor {
+	background: url('../img/emoticons.png') no-repeat 0 -272px;
+}
+
+.emoticon.poop {
+	background: url('../img/emoticons.png') no-repeat 0 -289px;
+}
+
+.emoticon.shark {
+	background: url('../img/emoticons.png') no-repeat 0 -323px;
+}
+
+.emoticon.seriously {
+	background: url('../img/emoticons.png') no-repeat -1px -358px;
+}
+
+.emoticon.fashion {
+	background: url('../img/emoticons.png') no-repeat -1px -375px;
+}
+
+.emoticon.hehe {
+	background: url('../img/emoticons.png') no-repeat -1px -392px;
+}
+
+.emoticon.mmm {
+	background: url('../img/emoticons.png') no-repeat -1px -409px;
+}
+
+.emoticon.lol {
+	background: url('../img/emoticons.png') no-repeat -1px -426px;
+}
+
+.emoticon.wink {
+	background: url('../img/emoticons.png') no-repeat -1px -443px;
+}
+
+.emoticon.robot {
+	background: url('../img/emoticons.png') no-repeat 0 -459px;
+}
+
+.emoticon.aguantaa {
+	width: 50px;
+	height: 48px;
+	background: url('../img/aguantaa.png') no-repeat;
+}
+
+.emoticon.aguantaa-thumbnail {
+	background: url('../img/aguantaa-thumb.png') no-repeat;
+}
+
+.emoticon.aguantaa-text {
+	width: 100px;
+	height: 48px;
+	background: url('../img/aguantaa.gif') no-repeat;
+}
+
+.emoticon.aguantaa-text-thumbnail {
+	background: url('../img/aguantaa.gif') no-repeat;
 }
