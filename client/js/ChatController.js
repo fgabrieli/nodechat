@@ -53,6 +53,15 @@ var ChatController = {
     $scope.isRegistered = false;
     
     $scope.names = [];
+
+    $scope.skins = [{ 
+        id : 0,
+        name : 'default'
+      },
+      {
+        id: 1 ,
+        name:'hacker'
+      }];
     
     $scope.skins = [{ 
         id : 0,
@@ -296,7 +305,7 @@ var ChatController = {
     $scope.isMyMsg = function(msg) {
       return (msg.data.sender == $scope.name);
     }
-    
+
     $scope.changeSkin = function(newSkin) {
       var $skin = $("#skin-stylesheet");
       var hasSkin = ($skin.size() == 1);
