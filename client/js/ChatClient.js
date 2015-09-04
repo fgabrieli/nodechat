@@ -16,7 +16,7 @@ var ChatClientFactory = {
 
 var ChatClient = {
 
-  SERVER_HOST : '10.60.76.157',
+  SERVER_HOST : '10.60.76.20',
 
   config : {},
 
