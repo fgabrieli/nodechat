@@ -16,6 +16,11 @@ var ChatController = {
     $scope.isEmoticonPanelDisplayed = false;
 
     $scope.msgs = [];
+    //set vars for msg history
+    $scope.msgHistory = [];
+    $scope.lastPositionHistory;
+    $scope.MAX_INPUT_HISTORY = 20;
+
     
     $scope.emoticonList = [
                            {name: "smile", code: ":)"},
@@ -155,15 +160,26 @@ var ChatController = {
       $('.chat').scrollTop(scrollTo);
     }
 
+    function saveMsgInHistory(msg){
+      $scope.msgHistory.push(msg);
+      var historyLength = $scope.msgHistory.length;
+      if(historyLength > $scope.MAX_INPUT_HISTORY){
+        $scope.msgHistory.splice(0,1);
+      }
+      console.log($scope.msgHistory);
+    }
+
     $(window).on('beforeunload', function() {
       t.client.end();
     });
 
     $scope.sendMsg = function() {
       t.client.say($scope.msg);
+      saveMsgInHistory($scope.msg);
       $scope.msg = '';
+      $scope.lastPositionHistory = $scope.msgHistory.length;
     };
-    
+
     $scope.parseMsgForEmoticons = function(text) {
     	
     	for(var i = 0; i < $scope.emoticonList.length; i++) {
@@ -229,6 +245,38 @@ var ChatController = {
 
       if (e.keyCode == KEY_ENTER) {
         $scope.sendMsg();
+      }
+    };
+
+    $scope.onKeyDown = function(e) {
+      //Navigate history
+      var KEY_UP = 38;
+      var KEY_DOWN = 40;
+      var historyLength = $scope.msgHistory.length
+      if (e.keyCode == KEY_UP || e.keyCode == KEY_DOWN) {
+        e.preventDefault();
+        var sum;
+        var isUp = (e.keyCode == KEY_UP);
+        console.log(isUp);
+        if(isUp){
+          sum = -1;
+        } else {
+          sum = 1;
+        }
+
+        $scope.lastPositionHistory = $scope.lastPositionHistory + sum;  
+        //set limits
+        if($scope.lastPositionHistory < 0){
+          $scope.lastPositionHistory = 0;
+        }
+        if($scope.lastPositionHistory > historyLength)
+        {
+          $scope.lastPositionHistory = historyLength;
+        }
+
+        console.log($scope.lastPositionHistory);
+
+        $scope.msg = $scope.msgHistory[$scope.lastPositionHistory];
       }
     };
 
