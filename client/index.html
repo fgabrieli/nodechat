@@ -83,8 +83,14 @@
 
 
       <div class="write">
-        <input type="text" size="45" data-ng-model="msg" data-ng-keyup="onKeyUp($event)" />
-
+        <input type="text" size="45" data-ng-model="msg" data-ng-trim="false" data-ng-keyup="onKeyUp($event)" />
+		<button class="emoticon-btn emoticon smile" data-ng-click="toggleSmileDialog()"></button>
+		<div data-ng-show="isEmoticonPanelDisplayed" class="emoticon-panel">
+			<ul class="emoticon-container">
+				<li class="emoticon emoticon-item {{emoticon.thumbnail ? emoticon.thumbnail : emoticon.name}}" data-ng-repeat="emoticon in emoticonList" data-ng-mouseover="showEmoticonName(emoticon.name)" data-ng-click="insertEmoticon(emoticon)"></li>
+			</ul>
+			<div class="emoticon-description">"{{emoticonName}}"</div>
+		</div>
         <button data-ng-click="sendMsg()">Send message</button>
       </div>
     </div>

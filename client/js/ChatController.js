@@ -10,15 +10,59 @@ var ChatController = {
   CONNECT_MAX_RETRIES : 3,
   CONNECT_RETRY_INTERVAL : 3 * 1000, // 3 seconds
 
-  ngController : function($scope) {
+  ngController : function($scope, $sce) {
     var t = ChatController;
+    
+    $scope.isEmoticonPanelDisplayed = false;
 
     $scope.msgs = [];
+    
+    $scope.emoticonList = [
+                           {name: "smile", code: ":)"},
+                           {name: "sad", code: ":("},
+                           {name: "like", code: "(y)"},
+                           {name: "angel", code: "0:-)"},
+                           {name: "nyam", code: ":3"},
+                           {name: "wtf", code: "o.O"},
+                           {name: "cry", code: ":'("},
+                           {name: "devil", code: "3>)"},
+                           {name: "surprised", code: ":o"},
+                           {name: "nerd", code: "8-)"},
+                           {name: "happy", code: ":D"},
+                           {name: "pain", code: ">:( "},
+                           {name: "heart", code: "<3"},
+                           {name: "kiss", code: ":*"},
+                           {name: "aww", code: "^_^"},
+                           {name: "juaz", code: ":v"},
+                           {name: "nestor", code: "<*)"},
+                           {name: "poop", code: ":poop:"},
+                           {name: "shark", code: ":shark:"},
+                           {name: "seriously", code: "-_-"},
+                           {name: "fashion", code: "B|"},
+                           {name: "hehe", code: ":p"},
+                           {name: "mmm", code: ":C"},
+                           {name: "lol", code: ">:o "},
+                           {name: "wink", code: ";)"},
+                           {name: "robot", code: ":robot:"},
+                           {name: "aguantaa", code: ":aguantaa:", thumbnail: "aguantaa-thumbnail"},
+                           {name: "aguantaa-text", code: ":aguanta2:", thumbnail: "aguantaa-text-thumbnail"}
+                          ];
+    
+    $scope.emoticonName = '';
 
     $scope.isRegistered = false;
     
     $scope.names = [];
 
+    $scope.skins = [{ 
+        id : 0,
+        name : 'default'
+      },
+      {
+        id: 1 ,
+        name:'hacker'
+      }];
+    
     $scope.skins = [{ 
         id : 0,
         name : 'default'
@@ -95,6 +139,12 @@ var ChatController = {
     });
     
     function pushMsg(msg) {
+      // We got to search for emoticons
+      if(msg.data.text) {
+    	  msg.data.text = $scope.parseMsgForEmoticons(msg.data.text);    	
+    	  msg.data.text = $scope.verifyYouTubeVideo(msg.data.text);
+      }
+      
       $scope.msgs.push(msg);
       $scope.$apply();
 
@@ -113,6 +163,66 @@ var ChatController = {
       t.client.say($scope.msg);
       $scope.msg = '';
     };
+    
+    $scope.parseMsgForEmoticons = function(text) {
+    	
+    	for(var i = 0; i < $scope.emoticonList.length; i++) {
+    		var iconElem = wrapper = $('<div>');
+    		var emoticon = $scope.emoticonList[i];
+    		var type = emoticon.name;
+    		iconElem.addClass('emoticon chat-emoticon ' + type);
+    		var iconHtml = ($('<div>').append(iconElem)).html();
+    		
+    		wrapper.attr('data-ng-bind-html', iconHtml);    		
+			var index = text.indexOf($scope.emoticonList[i].code);				
+
+    		while(index != -1) {
+    			var emoticonLength = index + emoticon.code.length;
+    			var wrapperText = ($('<div>').append(wrapper)).html()
+    			text = text.substring(0, index) + wrapperText + text.substring(emoticonLength, text.length);    		
+    			index = text.indexOf($scope.emoticonList[i].code);
+    		}
+    	}
+    	
+    	return text;
+    }
+    
+    $scope.verifyYouTubeVideo = function(text) {
+    	var urlRegex = new RegExp(/youtube\.com(.+)v=([^&]+)/);
+    	var codeRegex = new RegExp(/=([a-zA-Z\-0-9]+)/gi);
+    	
+    	if(text.match(urlRegex)) {
+    		var videoElem = $('<video>');
+    		var videoURL = text.match(urlRegex);
+    		var videoCode = videoURL[2];
+
+    		videoElem.attr('height', 150);
+    		videoElem.attr('width', 200);    		
+    		
+    		var embedURL = '//www.youtube.com/embed/' + videoCode;
+    		videoElem.attr('src', embedURL);
+    		
+    		videoElem = ($('<video>').append(videoElem)).html();
+    		text = $sce.trustAsHtml('<iframe width="300" height="150" src="'+ embedURL + '" frameborder="0" allowfullscreen></iframe>');
+    	}
+    	return text;
+    }
+    
+    $scope.toggleSmileDialog = function() {
+    	$scope.isEmoticonPanelDisplayed = !$scope.isEmoticonPanelDisplayed;
+    };
+    
+    $scope.insertEmoticon = function(emoticon) {
+    	if(typeof $scope.msg == "undefined") {
+    		$scope.msg = '';
+    	}
+    	$scope.msg += ' ' + emoticon.code;
+    	$scope.toggleSmileDialog();
+    }
+    
+    $scope.showEmoticonName = function(name) {
+    	$scope.emoticonName = name;
+    }
 
     $scope.onKeyUp = function(e) {
       var KEY_ENTER = 13;
@@ -219,4 +329,4 @@ var ChatController = {
   }
 }
 
-webApp.controller('ChatController', ChatController.ngController);
+webApp.controller('ChatController', ['$scope', '$sce', ChatController.ngController]);
